@@ -1,0 +1,18 @@
+{
+	"nodes":[
+		{"id":"63fe962f95047863","x":-682,"y":-497,"width":619,"height":60,"color":"6","type":"text","text":"# Reply creation"},
+		{"id":"db1e4c04b9444b21","x":-702,"y":-395,"width":659,"height":154,"color":"6","type":"text","text":"## Introduction\nReplies are another core feature of LainForo. They allow users to comment on threads and converse with eachother."},
+		{"id":"fc405ba38b756775","x":-906,"y":-178,"width":409,"height":172,"color":"3","type":"text","text":"User fills out the required fields in the reply form, referred to in the code as\n```php\nview('form.reply')\n```"},
+		{"id":"960106ddb95bf299","x":-906,"y":60,"width":832,"height":408,"color":"3","type":"text","text":"This form view has fields for the following columns\n```php\n$author = \"LostBox66\"; // Name of the author. Defaults to Anonymous.\n$body = \"GenesisGir is really cool!\"; // Body/message of the reply\n\n// Optional / extra options\n$tripcode = \"-100IQ\"; // Tripcode of reply\n$xkcd = 1; // Generates a random xkcd comic from xkcd.com\n$rolldie = 1; // Generates a random integer from 1 - 6.\n\n// Automatically set\n$replyto = 1; // The ID that this thread is replying to.\n$indexed = 1; // Follows the 'indexed' column of the board it's being posted in. This goes by boolean logic, so 1 = true, 0 = false.\n```"},
+		{"id":"eca806a89c4fbd54","x":4,"y":-141,"width":353,"height":135,"color":"2","type":"text","text":"This is sent via POST to a function called `putReply()` in the `ThreadController` controller."},
+		{"id":"90d8c7a076ce8708","x":42,"y":126,"width":501,"height":371,"color":"2","type":"text","text":"The input is processed and each value is checked for validity, then inserted into the `replies` table in the database. The columns are as follows\n```\nauthor // default is Anonymous\nbody // reply body/message\ntripcode // reply tripcode\nxkcd // URL of the xkcd comic\ndie // random number\nreplyto // which thread the reply is for\nindexed // if the reply (thread) is public\n```"},
+		{"id":"5cba8ccf3ece3796","x":643,"y":233,"width":264,"height":158,"color":"2","type":"text","text":"After the data is successfully inserted into the table, it sends a notification via [ntfy.sh](https://ntfy.sh)"}
+	],
+	"edges":[
+		{"id":"947131780044311a","fromNode":"63fe962f95047863","fromSide":"bottom","toNode":"db1e4c04b9444b21","toSide":"top"},
+		{"id":"0bd3c61e158b4f80","fromNode":"fc405ba38b756775","fromSide":"bottom","toNode":"960106ddb95bf299","toSide":"top"},
+		{"id":"69f6d8ccb07251b4","fromNode":"960106ddb95bf299","fromSide":"right","toNode":"eca806a89c4fbd54","toSide":"left"},
+		{"id":"092cb52b3169e0c9","fromNode":"eca806a89c4fbd54","fromSide":"bottom","toNode":"90d8c7a076ce8708","toSide":"top"},
+		{"id":"616127ab8b467e17","fromNode":"90d8c7a076ce8708","fromSide":"right","toNode":"5cba8ccf3ece3796","toSide":"left"}
+	]
+}

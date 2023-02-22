@@ -1,0 +1,3 @@
+Posting is handled differently than other platforms in [[LainForo internals]]. No user accounts are required, and it's even preferred that users stay anonymous. Of course, they can set a name and [[Tripcodes|tripcode]], but the main use case for LainForo is for sites which support free speech and limited rules & guidelines.
+
+If you want to know how posting works on a more advanced level, you can visit [[Thread creation.canvas]] and [[Reply creation.canvas]].

@@ -1,0 +1,16 @@
+{
+	"nodes":[
+		{"id":"f1647e44edb13561","x":-423,"y":563,"width":486,"height":213,"color":"2","type":"text","text":"When rendered in a view, like `thread.replies` or `board.threads` or `thread.view`, only the first 8 characters of the tripcode are shown. This is mainly a UI decision to make the experience less messy. This is accomplished using `substr($string, 0, 8)`."},
+		{"id":"2429bab85630557b","x":-67,"y":-14,"width":420,"height":255,"color":"2","type":"text","text":"In `ThreadController`, either under `putReply()` or `putThread()`, depending on the type of post, there is a function which will hash the `$request->tripcode` variable using SHA-256, a reasonably secure hashing algorithm."},
+		{"id":"fc4362f745034797","x":-526,"y":334,"width":692,"height":162,"color":"5","type":"text","text":"Let's say the user put in `hello` as their tripcode. After being put through the `hash()` function to create a SHA-256 hash, it will be turned into `5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03` and be stored in the database table."},
+		{"id":"ca8f50ee47d509a7","x":-497,"y":-14,"width":317,"height":187,"color":"2","type":"text","text":"The user will fill out the form to create a new thread or reply. Under `[Extra options]`, they enter a phrase in the tripcode field."},
+		{"id":"81097a51de360df8","x":240,"y":293,"width":437,"height":244,"type":"text","text":">[!Note]\n>This hash is mathematically irreversible. Because SHA-256 is truncated to 160 bits, it is far more collision resistant than other algorithms."},
+		{"id":"908cd756bdca9b8e","x":-491,"y":-240,"width":634,"height":160,"color":"6","type":"text","text":"# *How tripcodes work in LainForo*\nThis focuses on how tripcodes are generated, stored and handled in LainForo. Enjoy."}
+	],
+	"edges":[
+		{"id":"4d5b886aa4fd1770","fromNode":"ca8f50ee47d509a7","fromSide":"right","toNode":"2429bab85630557b","toSide":"left"},
+		{"id":"fa5a8637f331ab2b","fromNode":"2429bab85630557b","fromSide":"bottom","toNode":"fc4362f745034797","toSide":"top"},
+		{"id":"5f1f552fb06dd7b6","fromNode":"fc4362f745034797","fromSide":"right","toNode":"81097a51de360df8","toSide":"left"},
+		{"id":"3e60d3cdf918c348","fromNode":"fc4362f745034797","fromSide":"bottom","toNode":"f1647e44edb13561","toSide":"top"}
+	]
+}

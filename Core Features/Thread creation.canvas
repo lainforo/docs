@@ -1,0 +1,20 @@
+{
+	"nodes":[
+		{"id":"ff01db4b0ff12c15","x":-553,"y":-538,"width":619,"height":60,"color":"6","type":"text","text":"# Thread creation"},
+		{"id":"3f3bd4f022a9b6ba","x":-573,"y":-436,"width":659,"height":178,"color":"6","type":"text","text":"## Introduction\nThreads are a core feature of LainForo. In short, it allows users to start discussions on the site about any topic they choose. In this example, we'll call our thread *\"The GenesisGir Thread.\"*"},
+		{"id":"29ff2df6c768406d","x":-765,"y":-215,"width":522,"height":154,"color":"3","type":"text","text":"Firstly, the user will fill out a form. This form is referred to in the code as\n```php\nview('form.thread')\n```"},
+		{"id":"4b181f78ac5f6766","x":-690,"y":-21,"width":520,"height":499,"color":"3","type":"text","text":"This form view has fields for the following columns\n```php\n// The $author field defaults to 'Anonymous'\n// if no value is supplied.\n$author = \"LostBox66\";\n$subject = \"The GenesisGir Thread\";\n$body = \"This is the official Gir thread!\";\n\n// Optional / extra options\n$tripcode = \"-100IQ\";\n\n// Set automatically\n$board = \"gir\";\n$indexed = 1; // This is taken from the board's database row to check if it's public or not. This goes by boolean logic, so 1 = true, 0 = false.\n```"},
+		{"id":"2d76d7b06f1757c9","x":-84,"y":-61,"width":250,"height":187,"color":"2","type":"text","text":"This is sent via POST request to a function called `putThread()` in the `ThreadController` controller."},
+		{"id":"c7402bbbc73d31e2","x":-105,"y":207,"width":543,"height":331,"color":"2","type":"text","text":"The input is processed and each value is checked for validity, then inserted into the `threads` table in the database. The columns are as follows:\n```\nauthor // Default is Anonymous\nboard // The board id\nsubject // Thread subject\nbody // Thread body/message\ntripcode // Thread tripcode (NULLABLE)\nindexed // Thread public status\n```"},
+		{"id":"292cdfaca9090f2d","x":166,"y":-478,"width":572,"height":340,"color":"6","type":"text","text":"For referance, the `putThread()` function is copied here (from commit `a07fed6`)\n\nYou can scroll down in this card to view more of it.\n\n```php\npublic function putThread(Request $request)\n\n{\n\n// Create a thread\n\n$thread = new Thread;\n\n$thread->board = $request->board;\n\n$thread->author = $request->author;\n\n$thread->subject = $request->subject;\n\n$thread->body = $request->body;\n\n$thread->indexed = $request->indexed;\n\nif ($request->tripcode ?? '') {\n\n$thread->tripcode = hash('sha256', $request->tripcode);\n\n} else {\n\n$thread->tripcode = null;\n\n}\n\n$this->sendNtfy($request->body, $request->author, 'thread', $thread->subject);\n\n$thread->save();\n\nreturn redirect()->back();\n\n}\n```"},
+		{"id":"c5cd32a22c46ea7d","x":501,"y":294,"width":264,"height":158,"color":"2","type":"text","text":"After the data is successfully inserted into the table, it sends a notification via [ntfy.sh](https://ntfy.sh)"}
+	],
+	"edges":[
+		{"id":"a59cd08ae5d0ea81","fromNode":"ff01db4b0ff12c15","fromSide":"bottom","toNode":"3f3bd4f022a9b6ba","toSide":"top"},
+		{"id":"781f0983c8989193","fromNode":"29ff2df6c768406d","fromSide":"bottom","toNode":"4b181f78ac5f6766","toSide":"top"},
+		{"id":"263d7ac773e12978","fromNode":"4b181f78ac5f6766","fromSide":"right","toNode":"2d76d7b06f1757c9","toSide":"left"},
+		{"id":"50226230015a0b56","fromNode":"2d76d7b06f1757c9","fromSide":"top","toNode":"292cdfaca9090f2d","toSide":"left"},
+		{"id":"62452c21d5b0ffa9","fromNode":"2d76d7b06f1757c9","fromSide":"bottom","toNode":"c7402bbbc73d31e2","toSide":"top"},
+		{"id":"b61df68c020fe211","fromNode":"c7402bbbc73d31e2","fromSide":"right","toNode":"c5cd32a22c46ea7d","toSide":"left"}
+	]
+}
